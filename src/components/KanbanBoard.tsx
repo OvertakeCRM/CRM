@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   DndContext,
@@ -46,12 +46,23 @@ function Card({ prospect }: { prospect: ProspectWithRep }) {
   );
 }
 
-function Column({ stage, prospects }: { stage: Stage; prospects: ProspectWithRep[] }) {
+function Column({
+  stage,
+  prospects,
+  columnRef,
+}: {
+  stage: Stage;
+  prospects: ProspectWithRep[];
+  columnRef: (el: HTMLDivElement | null) => void;
+}) {
   const { setNodeRef, isOver } = useDroppable({ id: stage });
   const meta = STAGE_META[stage];
 
   return (
-    <div className="w-72 shrink-0">
+    <div
+      ref={columnRef}
+      className="w-72 shrink-0 scroll-ml-4"
+    >
       <div className="mb-2 flex items-center gap-2 px-1">
         <span className={`size-2 rounded-full ${meta.dot}`} />
         <h3 className="text-sm font-semibold text-slate-700">{meta.label}</h3>
@@ -74,6 +85,7 @@ function Column({ stage, prospects }: { stage: Stage; prospects: ProspectWithRep
 export default function KanbanBoard({ initialProspects }: { initialProspects: ProspectWithRep[] }) {
   const [prospects, setProspects] = useState(initialProspects);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const columnRefs = useRef(new Map<Stage, HTMLDivElement>());
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -106,20 +118,52 @@ export default function KanbanBoard({ initialProspects }: { initialProspects: Pr
     });
   }
 
+  function jumpToStage(stage: Stage) {
+    columnRefs.current.get(stage)?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+  }
+
   return (
-    <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <div className="flex gap-4 overflow-x-auto px-4 pb-4 md:px-0">
-        {STAGES.map((stage) => (
-          <Column key={stage} stage={stage} prospects={columns.get(stage) ?? []} />
-        ))}
+    <div>
+      <div className="mb-4 flex flex-wrap gap-1.5 px-4 md:px-0">
+        {STAGES.map((stage) => {
+          const meta = STAGE_META[stage];
+          return (
+            <button
+              key={stage}
+              type="button"
+              onClick={() => jumpToStage(stage)}
+              className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${meta.color}`}
+            >
+              <span className={`size-1.5 rounded-full ${meta.dot}`} />
+              {meta.short}
+              <span className="font-semibold">{columns.get(stage)?.length ?? 0}</span>
+            </button>
+          );
+        })}
       </div>
-      <DragOverlay>
-        {activeProspect && (
-          <div className="w-64 rounded-lg border border-blue-300 bg-white p-3 shadow-lg">
-            <p className="truncate text-sm font-semibold text-slate-900">{activeProspect.warehouse_name}</p>
-          </div>
-        )}
-      </DragOverlay>
-    </DndContext>
+
+      <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+        <div className="flex gap-4 overflow-x-auto px-4 pb-4 md:px-0">
+          {STAGES.map((stage) => (
+            <Column
+              key={stage}
+              stage={stage}
+              prospects={columns.get(stage) ?? []}
+              columnRef={(el) => {
+                if (el) columnRefs.current.set(stage, el);
+                else columnRefs.current.delete(stage);
+              }}
+            />
+          ))}
+        </div>
+        <DragOverlay>
+          {activeProspect && (
+            <div className="w-64 rounded-lg border border-blue-300 bg-white p-3 shadow-lg">
+              <p className="truncate text-sm font-semibold text-slate-900">{activeProspect.warehouse_name}</p>
+            </div>
+          )}
+        </DragOverlay>
+      </DndContext>
+    </div>
   );
 }
