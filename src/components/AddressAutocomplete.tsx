@@ -47,6 +47,12 @@ export default function AddressAutocomplete({
         }}
         placeholder="Start typing an address…"
         autoComplete="off"
+        onKeyDown={(e) => {
+          // Enter should accept the highlighted Google suggestion, not
+          // submit the surrounding form — Google's own listener on this
+          // input still handles the actual selection.
+          if (e.key === "Enter") e.preventDefault();
+        }}
         className="w-full rounded-lg border border-slate-300 px-3 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
       />
       {error && <p className="mt-1 text-xs text-slate-400">Map autocomplete unavailable — you can still type the address.</p>}
