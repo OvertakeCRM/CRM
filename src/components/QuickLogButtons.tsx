@@ -3,7 +3,16 @@
 import { useTransition } from "react";
 import { logActivityClient } from "@/lib/offlineActions";
 
-const QUICK_LOGS = ["No answer", "Gatekeeper only", "Call back later"];
+const QUICK_LOGS = [
+  "No answer",
+  "Gatekeeper only",
+  "Call back later",
+  "Left voicemail",
+  "Rescheduled",
+  "Site closed",
+  "Wrong number",
+  "Not interested",
+];
 
 export default function QuickLogButtons({
   prospectId,
