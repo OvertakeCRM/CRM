@@ -58,9 +58,13 @@ There's no public sign-up screen (sales CRMs shouldn't have one) — accounts ar
 
 ## What's in v1 vs. later
 
-**Included:** accounts & roles, prospect records with photos, the 9-stage pipeline with an audit-logged activity timeline, quick-log shortcuts, voice-to-text notes, duplicate-prospect warnings, list/Kanban/map views, an admin dashboard (stage counts, stale leads, rep leaderboard, container-volume forecast, win/loss breakdown), CSV export, and an installable mobile PWA shell.
+**Included:** accounts & roles, prospect records with photos, the 9-stage pipeline with an audit-logged activity timeline, quick-log shortcuts, voice-to-text notes, duplicate-prospect warnings, list/Kanban/map views, an admin dashboard (stage counts, stale leads, rep leaderboard, container-volume forecast, win/loss breakdown), CSV export, an installable mobile PWA shell, GPS check-in with "warehouses near you," a nearest-neighbor day-route planner that hands off to Google Maps for turn-by-turn directions, and offline support for the actions reps use most in the field.
 
-**Deliberately deferred (Phase 2):** a true offline write-queue with background sync, push notifications for follow-ups, GPS-proximity auto check-in ("warehouses near you"), route optimization for a day's visits, and in-app SMS/email sending (Twilio/Resend) — v1 uses `tel:` / `sms:` / `mailto:` links instead.
+**How offline mode works:** stage changes, quick-log entries, and notes on the prospect detail page write straight from the browser to Supabase (bypassing the Next.js server), and fall back to a durable IndexedDB queue — survives closing the tab or restarting the phone — if that fails. Queued changes show a "Syncing" badge and sync automatically once signal returns; a banner at the top of the app reflects the current state. `experimental.useOffline` is also enabled in `next.config.ts`, so other actions (photo upload, editing prospect details, admin operations) retry automatically on a transient signal drop instead of failing outright, for as long as the tab stays open.
+
+**Not covered:** creating a brand-new prospect or uploading a photo while offline (both need a live connection), and opening a prospect page you've never loaded before with zero signal (the HTML itself needs the network at least once — full page-shell offline caching would need a service worker, e.g. via [Serwist](https://github.com/serwist/serwist), which isn't set up here).
+
+**Still deferred:** push notifications for follow-up reminders, and in-app SMS/email sending (Twilio/Resend) — v1 uses `tel:` / `sms:` / `mailto:` links instead.
 
 ## Deploying
 

@@ -1,8 +1,11 @@
 import { formatDistanceToNow } from "date-fns";
+import { Clock } from "lucide-react";
 import { STAGE_META } from "@/lib/stages";
 import type { ActivityLogEntry } from "@/lib/database.types";
 
-export default function ActivityTimeline({ entries }: { entries: ActivityLogEntry[] }) {
+export type DisplayActivityEntry = ActivityLogEntry & { pending?: boolean };
+
+export default function ActivityTimeline({ entries }: { entries: DisplayActivityEntry[] }) {
   if (entries.length === 0) {
     return <p className="py-6 text-center text-sm text-slate-400">No activity yet.</p>;
   }
@@ -11,13 +14,18 @@ export default function ActivityTimeline({ entries }: { entries: ActivityLogEntr
     <ol className="space-y-4">
       {entries.map((entry) => (
         <li key={entry.id} className="flex gap-3">
-          <div className="mt-1 size-2 shrink-0 rounded-full bg-slate-300" />
+          <div className={`mt-1 size-2 shrink-0 rounded-full ${entry.pending ? "bg-amber-400" : "bg-slate-300"}`} />
           <div className="min-w-0 flex-1 pb-1">
             <div className="flex flex-wrap items-baseline gap-x-2 text-sm">
               <span className="font-semibold text-slate-900">{entry.rep?.full_name ?? "Someone"}</span>
               <span className="text-slate-400">
                 {formatDistanceToNow(new Date(entry.created_at), { addSuffix: true })}
               </span>
+              {entry.pending && (
+                <span className="flex items-center gap-1 rounded-full bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-700">
+                  <Clock size={10} /> Syncing
+                </span>
+              )}
             </div>
 
             {entry.type === "stage_change" && entry.new_stage && (

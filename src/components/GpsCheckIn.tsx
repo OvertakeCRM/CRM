@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { Navigation2, CheckCircle2 } from "lucide-react";
 import { useGeolocation } from "@/lib/useGeolocation";
 import { haversineKm, formatDistanceKm, CHECK_IN_RADIUS_KM } from "@/lib/geo";
-import { changeStage } from "@/lib/actions/prospects";
+import { changeStageClient } from "@/lib/offlineActions";
 import type { Stage } from "@/lib/database.types";
 
 export default function GpsCheckIn({
@@ -12,11 +12,13 @@ export default function GpsCheckIn({
   lat,
   lng,
   stage,
+  onStageChange,
 }: {
   prospectId: string;
   lat: number;
   lng: number;
   stage: Stage;
+  onStageChange?: (stage: Stage, note: string | undefined, queued: boolean, id: string) => void;
 }) {
   const { status, coords, error, request } = useGeolocation();
   const [isPending, startTransition] = useTransition();
@@ -27,7 +29,8 @@ export default function GpsCheckIn({
 
   function markVisited() {
     startTransition(async () => {
-      await changeStage(prospectId, "visited", "GPS check-in");
+      const { queued, id } = await changeStageClient(prospectId, "visited", "GPS check-in");
+      onStageChange?.("visited", "GPS check-in", queued, id);
       setCheckedIn(true);
     });
   }

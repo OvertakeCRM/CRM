@@ -2,10 +2,18 @@
 
 import { useState, useTransition } from "react";
 import { STAGES, STAGE_META, LOSS_REASON_META } from "@/lib/stages";
-import { changeStage } from "@/lib/actions/prospects";
+import { changeStageClient } from "@/lib/offlineActions";
 import type { LossReason, Stage } from "@/lib/database.types";
 
-export default function StageChanger({ prospectId, currentStage }: { prospectId: string; currentStage: Stage }) {
+export default function StageChanger({
+  prospectId,
+  currentStage,
+  onStageChange,
+}: {
+  prospectId: string;
+  currentStage: Stage;
+  onStageChange?: (stage: Stage, note: string | undefined, queued: boolean, id: string) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [pendingStage, setPendingStage] = useState<Stage | null>(null);
   const [note, setNote] = useState("");
@@ -20,8 +28,16 @@ export default function StageChanger({ prospectId, currentStage }: { prospectId:
 
   function confirm() {
     if (!pendingStage) return;
+    const stage = pendingStage;
+    const trimmedNote = note.trim() || undefined;
     startTransition(async () => {
-      await changeStage(prospectId, pendingStage, note.trim() || undefined, pendingStage === "lost" ? lossReason : undefined);
+      const { queued, id } = await changeStageClient(
+        prospectId,
+        stage,
+        trimmedNote,
+        stage === "lost" ? lossReason : undefined,
+      );
+      onStageChange?.(stage, trimmedNote, queued, id);
       setPendingStage(null);
       setOpen(false);
     });

@@ -2,7 +2,7 @@
 
 import { useRef, useState, useSyncExternalStore, useTransition } from "react";
 import { Mic, Square } from "lucide-react";
-import { logActivity } from "@/lib/actions/prospects";
+import { logActivityClient } from "@/lib/offlineActions";
 
 // Minimal ambient type for the non-standard Web Speech API.
 interface SpeechRecognitionLike extends EventTarget {
@@ -15,7 +15,13 @@ interface SpeechRecognitionLike extends EventTarget {
   onend: (() => void) | null;
 }
 
-export default function NoteInput({ prospectId }: { prospectId: string }) {
+export default function NoteInput({
+  prospectId,
+  onLogged,
+}: {
+  prospectId: string;
+  onLogged?: (note: string, queued: boolean, id: string) => void;
+}) {
   const [note, setNote] = useState("");
   const [recording, setRecording] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -62,7 +68,8 @@ export default function NoteInput({ prospectId }: { prospectId: string }) {
     if (!note.trim()) return;
     const text = note.trim();
     startTransition(async () => {
-      await logActivity(prospectId, "note", text);
+      const { queued, id } = await logActivityClient(prospectId, "note", text);
+      onLogged?.(text, queued, id);
       setNote("");
     });
   }

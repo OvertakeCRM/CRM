@@ -3,15 +3,11 @@ import { formatDistanceToNow } from "date-fns";
 import { requireUser } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import StageBadge from "@/components/StageBadge";
-import StageChanger from "@/components/StageChanger";
-import QuickLogButtons from "@/components/QuickLogButtons";
-import NoteInput from "@/components/NoteInput";
-import ActivityTimeline from "@/components/ActivityTimeline";
 import PhotoUploader from "@/components/PhotoUploader";
 import ContactLinks from "@/components/ContactLinks";
 import ProspectAdminControls from "@/components/ProspectAdminControls";
 import EditToggle from "@/components/EditToggle";
-import GpsCheckIn from "@/components/GpsCheckIn";
+import ProspectActivityWorkspace from "@/components/ProspectActivityWorkspace";
 import { LOSS_REASON_META } from "@/lib/stages";
 import type { ActivityLogEntry, Photo, Prospect } from "@/lib/database.types";
 
@@ -93,44 +89,24 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
         </div>
       )}
 
-      {canEdit && p.lat != null && p.lng != null && p.stage !== "sold_won" && p.stage !== "lost" && (
-        <div className="mb-5">
-          <GpsCheckIn prospectId={p.id} lat={p.lat} lng={p.lng} stage={p.stage} />
-        </div>
-      )}
-
-      {canEdit && (
-        <div className="mb-5">
-          <StageChanger prospectId={p.id} currentStage={p.stage} />
-        </div>
-      )}
-
       <div className="mb-6">
         <h2 className="mb-2 text-sm font-semibold text-slate-500">Photos</h2>
         <PhotoUploader prospectId={p.id} photos={(photos ?? []) as Photo[]} />
       </div>
 
-      {canEdit && (
-        <>
-          <div className="mb-6">
-            <h2 className="mb-2 text-sm font-semibold text-slate-500">Quick log</h2>
-            <QuickLogButtons prospectId={p.id} />
-          </div>
+      <ProspectActivityWorkspace
+        prospectId={p.id}
+        initialStage={p.stage}
+        initialActivity={(activity ?? []) as unknown as ActivityLogEntry[]}
+        canEdit={canEdit}
+        lat={p.lat}
+        lng={p.lng}
+        currentUserId={user.id}
+        currentUserName={user.full_name}
+      />
 
-          <div className="mb-6">
-            <h2 className="mb-2 text-sm font-semibold text-slate-500">Add a note</h2>
-            <NoteInput prospectId={p.id} />
-          </div>
-        </>
-      )}
-
-      <div className="mb-6">
+      <div className="mt-6">
         <EditToggle prospect={p} />
-      </div>
-
-      <div>
-        <h2 className="mb-3 text-sm font-semibold text-slate-500">Activity</h2>
-        <ActivityTimeline entries={(activity ?? []) as unknown as ActivityLogEntry[]} />
       </div>
     </div>
   );

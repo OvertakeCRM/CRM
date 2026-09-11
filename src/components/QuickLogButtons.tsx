@@ -1,16 +1,23 @@
 "use client";
 
 import { useTransition } from "react";
-import { logActivity } from "@/lib/actions/prospects";
+import { logActivityClient } from "@/lib/offlineActions";
 
 const QUICK_LOGS = ["No answer", "Gatekeeper only", "Call back later"];
 
-export default function QuickLogButtons({ prospectId }: { prospectId: string }) {
+export default function QuickLogButtons({
+  prospectId,
+  onLogged,
+}: {
+  prospectId: string;
+  onLogged?: (note: string, queued: boolean, id: string) => void;
+}) {
   const [isPending, startTransition] = useTransition();
 
   function log(text: string) {
-    startTransition(() => {
-      logActivity(prospectId, "quick_log", text);
+    startTransition(async () => {
+      const { queued, id } = await logActivityClient(prospectId, "quick_log", text);
+      onLogged?.(text, queued, id);
     });
   }
 
