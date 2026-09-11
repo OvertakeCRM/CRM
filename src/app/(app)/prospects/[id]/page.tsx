@@ -11,6 +11,7 @@ import PhotoUploader from "@/components/PhotoUploader";
 import ContactLinks from "@/components/ContactLinks";
 import ProspectAdminControls from "@/components/ProspectAdminControls";
 import EditToggle from "@/components/EditToggle";
+import GpsCheckIn from "@/components/GpsCheckIn";
 import { LOSS_REASON_META } from "@/lib/stages";
 import type { ActivityLogEntry, Photo, Prospect } from "@/lib/database.types";
 
@@ -89,6 +90,12 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
               <span className="font-semibold text-slate-700">Current competitor:</span> {p.competitor}
             </p>
           )}
+        </div>
+      )}
+
+      {canEdit && p.lat != null && p.lng != null && p.stage !== "sold_won" && p.stage !== "lost" && (
+        <div className="mb-5">
+          <GpsCheckIn prospectId={p.id} lat={p.lat} lng={p.lng} stage={p.stage} />
         </div>
       )}
 

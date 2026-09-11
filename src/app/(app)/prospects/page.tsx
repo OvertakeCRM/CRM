@@ -1,6 +1,7 @@
 import { requireUser } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import ProspectCard from "@/components/ProspectCard";
+import NearbyProspects from "@/components/NearbyProspects";
 import { STAGES, STAGE_META } from "@/lib/stages";
 import type { ProspectWithRep, Stage } from "@/lib/database.types";
 
@@ -45,9 +46,14 @@ export default async function ProspectsPage({
   const { column, ascending } = sortMap[sort] ?? sortMap.updated_desc;
   query = query.order(column, { ascending, nullsFirst: false });
 
-  const [{ data: prospects }, { data: reps }] = await Promise.all([
+  const [{ data: prospects }, { data: reps }, { data: allOpenProspects }] = await Promise.all([
     query,
     user.role === "admin" ? supabase.from("profiles").select("id, full_name").order("full_name") : Promise.resolve({ data: [] as { id: string; full_name: string }[] }),
+    supabase
+      .from("prospects")
+      .select("*, assigned_rep:profiles!prospects_assigned_rep_id_fkey(id, full_name)")
+      .not("lat", "is", null)
+      .not("stage", "in", "(sold_won,lost)"),
   ]);
 
   const list = (prospects ?? []) as unknown as ProspectWithRep[];
@@ -63,6 +69,8 @@ export default async function ProspectsPage({
           </a>
         </div>
       </div>
+
+      <NearbyProspects prospects={(allOpenProspects ?? []) as unknown as ProspectWithRep[]} />
 
       <form method="get" className="mb-4 space-y-2">
         <input
