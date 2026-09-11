@@ -1,0 +1,13 @@
+{
+  "name": "Royal Westmont CRM",
+  "short_name": "Westmont CRM",
+  "description": "Warehouse prospect tracker for Royal Westmont sales reps.",
+  "start_url": "/prospects",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
