@@ -55,7 +55,7 @@ export default function RoutePlanner({ prospects }: { prospects: ProspectWithRep
 
   if (prospects.length === 0) {
     return (
-      <p className="py-10 text-center text-sm text-slate-400">
+      <p className="py-10 text-center text-sm text-slate-400 dark:text-slate-500">
         No open prospects with a mapped address yet — add addresses via the Google Maps autocomplete to plan a route.
       </p>
     );
@@ -67,7 +67,7 @@ export default function RoutePlanner({ prospects }: { prospects: ProspectWithRep
         {prospects.map((p) => (
           <label
             key={p.id}
-            className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white p-3"
+            className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900"
           >
             <input
               type="checkbox"
@@ -76,8 +76,8 @@ export default function RoutePlanner({ prospects }: { prospects: ProspectWithRep
               className="size-4 shrink-0"
             />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-slate-900">{p.warehouse_name}</p>
-              <p className="truncate text-xs text-slate-500">{p.address}</p>
+              <p className="truncate text-sm font-medium text-slate-900 dark:text-white">{p.warehouse_name}</p>
+              <p className="truncate text-xs text-slate-500 dark:text-slate-400">{p.address}</p>
             </div>
             <StageBadge stage={p.stage} />
           </label>
@@ -96,25 +96,27 @@ export default function RoutePlanner({ prospects }: { prospects: ProspectWithRep
         </button>
       )}
 
-      {status === "loading" && <p className="text-center text-sm text-slate-400">Finding your location…</p>}
+      {status === "loading" && (
+        <p className="text-center text-sm text-slate-400 dark:text-slate-500">Finding your location…</p>
+      )}
       {(status === "denied" || status === "error") && (
-        <p className="text-center text-sm text-slate-400">{error}</p>
+        <p className="text-center text-sm text-slate-400 dark:text-slate-500">{error}</p>
       )}
 
       {status === "granted" && orderedProspects.length > 0 && (
-        <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
-          <p className="mb-3 text-sm font-semibold text-blue-800">
+        <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-950">
+          <p className="mb-3 text-sm font-semibold text-blue-800 dark:text-blue-300">
             Suggested order · ~{formatDistanceKm(totalKm)} total (straight-line)
           </p>
           <ol className="mb-3 space-y-2">
             {orderedProspects.map((p, i) => (
-              <li key={p.id} className="flex items-center gap-3 rounded-lg bg-white px-3 py-2">
+              <li key={p.id} className="flex items-center gap-3 rounded-lg bg-white px-3 py-2 dark:bg-slate-900">
                 <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
                   {i + 1}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-slate-900">{p.warehouse_name}</p>
-                  <p className="truncate text-xs text-slate-500">{p.address}</p>
+                  <p className="truncate text-sm font-medium text-slate-900 dark:text-white">{p.warehouse_name}</p>
+                  <p className="truncate text-xs text-slate-500 dark:text-slate-400">{p.address}</p>
                 </div>
               </li>
             ))}

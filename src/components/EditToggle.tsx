@@ -13,7 +13,7 @@ export default function EditToggle({ prospect }: { prospect: Prospect }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex items-center gap-1.5 text-sm font-medium text-blue-600"
+        className="flex items-center gap-1.5 text-sm font-medium text-blue-600 dark:text-blue-400"
       >
         <Pencil size={14} /> Edit details
       </button>
@@ -21,7 +21,7 @@ export default function EditToggle({ prospect }: { prospect: Prospect }) {
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4">
+    <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
       <ProspectEditForm prospect={prospect} onDone={() => setOpen(false)} />
     </div>
   );

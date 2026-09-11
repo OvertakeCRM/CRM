@@ -107,7 +107,7 @@ export default function ProspectActivityWorkspace({
       {canEdit && (
         <>
           <div className="mb-6">
-            <h2 className="mb-2 text-sm font-semibold text-slate-500">Quick log</h2>
+            <h2 className="mb-2 text-sm font-semibold text-slate-500 dark:text-slate-400">Quick log</h2>
             <QuickLogButtons
               prospectId={prospectId}
               onLogged={(note, queued, id) => addNoteEntry("quick_log", note, queued, id)}
@@ -115,14 +115,14 @@ export default function ProspectActivityWorkspace({
           </div>
 
           <div className="mb-6">
-            <h2 className="mb-2 text-sm font-semibold text-slate-500">Add a note</h2>
+            <h2 className="mb-2 text-sm font-semibold text-slate-500 dark:text-slate-400">Add a note</h2>
             <NoteInput prospectId={prospectId} onLogged={(note, queued, id) => addNoteEntry("note", note, queued, id)} />
           </div>
         </>
       )}
 
       <div>
-        <h2 className="mb-3 text-sm font-semibold text-slate-500">Activity</h2>
+        <h2 className="mb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Activity</h2>
         <ActivityTimeline entries={allEntries} />
       </div>
     </div>

@@ -30,7 +30,7 @@ export default function NearbyProspects({ prospects }: { prospects: ProspectWith
       <button
         type="button"
         onClick={request}
-        className="mb-4 flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-blue-300 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700"
+        className="mb-4 flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-blue-300 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 dark:border-blue-700 dark:bg-blue-950 dark:text-blue-300"
       >
         <Navigation2 size={16} />
         Find warehouses near me
@@ -39,16 +39,16 @@ export default function NearbyProspects({ prospects }: { prospects: ProspectWith
   }
 
   if (status === "loading") {
-    return <p className="mb-4 text-center text-sm text-slate-400">Finding your location…</p>;
+    return <p className="mb-4 text-center text-sm text-slate-400 dark:text-slate-500">Finding your location…</p>;
   }
 
   if (status === "denied" || status === "error") {
-    return <p className="mb-4 text-center text-sm text-slate-400">{error}</p>;
+    return <p className="mb-4 text-center text-sm text-slate-400 dark:text-slate-500">{error}</p>;
   }
 
   if (nearby.length === 0) {
     return (
-      <p className="mb-4 text-center text-sm text-slate-400">
+      <p className="mb-4 text-center text-sm text-slate-400 dark:text-slate-500">
         No open prospects with a mapped address within {NEARBY_RADIUS_KM} km of you.
       </p>
     );
@@ -57,8 +57,8 @@ export default function NearbyProspects({ prospects }: { prospects: ProspectWith
   const shown = expanded ? nearby : nearby.slice(0, 3);
 
   return (
-    <div className="mb-4 rounded-xl border border-blue-200 bg-blue-50 p-3">
-      <p className="mb-2 text-sm font-semibold text-blue-800">
+    <div className="mb-4 rounded-xl border border-blue-200 bg-blue-50 p-3 dark:border-blue-800 dark:bg-blue-950">
+      <p className="mb-2 text-sm font-semibold text-blue-800 dark:text-blue-300">
         {nearby.length} warehouse{nearby.length === 1 ? "" : "s"} near you
       </p>
       <div className="space-y-1.5">
@@ -66,10 +66,10 @@ export default function NearbyProspects({ prospects }: { prospects: ProspectWith
           <Link
             key={prospect.id}
             href={`/prospects/${prospect.id}`}
-            className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-sm"
+            className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-sm dark:bg-slate-900"
           >
-            <span className="truncate font-medium text-slate-800">{prospect.warehouse_name}</span>
-            <span className="ml-2 shrink-0 text-xs text-slate-400">{formatDistanceKm(distanceKm)}</span>
+            <span className="truncate font-medium text-slate-800 dark:text-slate-200">{prospect.warehouse_name}</span>
+            <span className="ml-2 shrink-0 text-xs text-slate-400 dark:text-slate-500">{formatDistanceKm(distanceKm)}</span>
           </Link>
         ))}
       </div>
@@ -77,7 +77,7 @@ export default function NearbyProspects({ prospects }: { prospects: ProspectWith
         <button
           type="button"
           onClick={() => setExpanded((e) => !e)}
-          className="mt-2 text-xs font-medium text-blue-700"
+          className="mt-2 text-xs font-medium text-blue-700 dark:text-blue-300"
         >
           {expanded ? "Show less" : `Show ${nearby.length - 3} more`}
         </button>

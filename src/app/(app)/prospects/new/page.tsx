@@ -16,7 +16,7 @@ export default async function NewProspectPage() {
 
   return (
     <div className="mx-auto max-w-lg px-4 pt-5 md:px-0">
-      <h1 className="mb-5 text-xl font-bold text-slate-900">New prospect</h1>
+      <h1 className="mb-5 text-xl font-bold text-slate-900 dark:text-white">New prospect</h1>
       <ProspectForm reps={reps} isAdmin={user.role === "admin"} currentUserId={user.id} />
     </div>
   );

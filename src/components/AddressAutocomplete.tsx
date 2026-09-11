@@ -53,9 +53,13 @@ export default function AddressAutocomplete({
           // input still handles the actual selection.
           if (e.key === "Enter") e.preventDefault();
         }}
-        className="w-full rounded-lg border border-slate-300 px-3 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        className="w-full rounded-lg border border-slate-300 px-3 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
       />
-      {error && <p className="mt-1 text-xs text-slate-400">Map autocomplete unavailable — you can still type the address.</p>}
+      {error && (
+        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+          Map autocomplete unavailable — you can still type the address.
+        </p>
+      )}
     </div>
   );
 }

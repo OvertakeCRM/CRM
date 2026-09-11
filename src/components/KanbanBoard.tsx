@@ -31,13 +31,13 @@ function Card({ prospect }: { prospect: ProspectWithRep }) {
       style={style}
       {...listeners}
       {...attributes}
-      className={`touch-none rounded-lg border border-slate-200 bg-white p-3 shadow-sm ${isDragging ? "opacity-40" : ""}`}
+      className={`touch-none rounded-lg border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900 ${isDragging ? "opacity-40" : ""}`}
     >
       <Link href={`/prospects/${prospect.id}`} className="block" onClick={(e) => isDragging && e.preventDefault()}>
-        <p className="truncate text-sm font-semibold text-slate-900">{prospect.warehouse_name}</p>
-        <p className="truncate text-xs text-slate-500">{prospect.assigned_rep?.full_name}</p>
+        <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">{prospect.warehouse_name}</p>
+        <p className="truncate text-xs text-slate-500 dark:text-slate-400">{prospect.assigned_rep?.full_name}</p>
         {prospect.containers_per_week != null && (
-          <p className="mt-1 flex items-center gap-1 text-xs text-slate-400">
+          <p className="mt-1 flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500">
             <Package size={12} /> {prospect.containers_per_week}/wk
           </p>
         )}
@@ -65,13 +65,15 @@ function Column({
     >
       <div className="mb-2 flex items-center gap-2 px-1">
         <span className={`size-2 rounded-full ${meta.dot}`} />
-        <h3 className="text-sm font-semibold text-slate-700">{meta.label}</h3>
-        <span className="text-xs text-slate-400">{prospects.length}</span>
+        <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">{meta.label}</h3>
+        <span className="text-xs text-slate-400 dark:text-slate-500">{prospects.length}</span>
       </div>
       <div
         ref={setNodeRef}
         className={`flex min-h-24 flex-col gap-2 rounded-xl border-2 border-dashed p-2 transition ${
-          isOver ? "border-blue-400 bg-blue-50" : "border-transparent bg-slate-100/60"
+          isOver
+            ? "border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-950"
+            : "border-transparent bg-slate-100/60 dark:bg-slate-900/60"
         }`}
       >
         {prospects.map((p) => (
@@ -158,8 +160,8 @@ export default function KanbanBoard({ initialProspects }: { initialProspects: Pr
         </div>
         <DragOverlay>
           {activeProspect && (
-            <div className="w-64 rounded-lg border border-blue-300 bg-white p-3 shadow-lg">
-              <p className="truncate text-sm font-semibold text-slate-900">{activeProspect.warehouse_name}</p>
+            <div className="w-64 rounded-lg border border-blue-300 bg-white p-3 shadow-lg dark:border-blue-700 dark:bg-slate-900">
+              <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">{activeProspect.warehouse_name}</p>
             </div>
           )}
         </DragOverlay>

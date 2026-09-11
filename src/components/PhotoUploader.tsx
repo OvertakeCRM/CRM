@@ -31,7 +31,7 @@ export default function PhotoUploader({ prospectId, photos }: { prospectId: stri
     <div>
       <div className="grid grid-cols-3 gap-2">
         {photos.map((photo) => (
-          <div key={photo.id} className="group relative aspect-square overflow-hidden rounded-lg bg-slate-100">
+          <div key={photo.id} className="group relative aspect-square overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
             <Image src={photoUrl(photo.storage_path)} alt="" fill sizes="200px" className="object-cover" unoptimized />
             <button
               type="button"
@@ -48,7 +48,7 @@ export default function PhotoUploader({ prospectId, photos }: { prospectId: stri
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={isPending}
-          className="flex aspect-square flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed border-slate-300 text-slate-400 disabled:opacity-50"
+          className="flex aspect-square flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed border-slate-300 text-slate-400 disabled:opacity-50 dark:border-slate-700 dark:text-slate-500"
         >
           <Camera size={22} />
           <span className="text-xs font-medium">{isPending ? "Uploading…" : "Add"}</span>
@@ -64,7 +64,7 @@ export default function PhotoUploader({ prospectId, photos }: { prospectId: stri
         onChange={(e) => handleFiles(e.target.files)}
       />
 
-      {error && <p className="mt-2 text-sm text-rose-600">{error}</p>}
+      {error && <p className="mt-2 text-sm text-rose-600 dark:text-rose-400">{error}</p>}
     </div>
   );
 }

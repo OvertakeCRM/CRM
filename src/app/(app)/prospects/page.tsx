@@ -57,14 +57,16 @@ export default async function ProspectsPage({
   ]);
 
   const list = (prospects ?? []) as unknown as ProspectWithRep[];
+  const selectClass =
+    "rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-white";
 
   return (
     <div className="px-4 pt-4 md:px-0">
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-slate-900">Prospects</h1>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-white">Prospects</h1>
         <div className="flex items-center gap-3">
-          <span className="hidden text-sm text-slate-400 sm:inline">{list.length} shown</span>
-          <a href="/api/export" className="text-sm font-medium text-blue-600 hover:underline">
+          <span className="hidden text-sm text-slate-400 dark:text-slate-500 sm:inline">{list.length} shown</span>
+          <a href="/api/export" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">
             Export CSV
           </a>
         </div>
@@ -78,24 +80,24 @@ export default async function ProspectsPage({
           name="q"
           defaultValue={q}
           placeholder="Search by name or address…"
-          className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
         />
 
         <div className="flex flex-wrap gap-2">
           {user.role === "admin" && (
-            <select name="scope" defaultValue={scope} className="rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-sm">
+            <select name="scope" defaultValue={scope} className={selectClass}>
               <option value="all">All reps</option>
               <option value="mine">My prospects</option>
             </select>
           )}
           {user.role === "rep" && (
-            <select name="scope" defaultValue={scope} className="rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-sm">
+            <select name="scope" defaultValue={scope} className={selectClass}>
               <option value="mine">My prospects</option>
               <option value="all">Everyone&apos;s (read-only)</option>
             </select>
           )}
 
-          <select name="stage" defaultValue={stageFilter} className="rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-sm">
+          <select name="stage" defaultValue={stageFilter} className={selectClass}>
             <option value="">All stages</option>
             {STAGES.map((s) => (
               <option key={s} value={s}>
@@ -105,7 +107,7 @@ export default async function ProspectsPage({
           </select>
 
           {scope === "all" && user.role === "admin" && (
-            <select name="rep" defaultValue={repFilter} className="rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-sm">
+            <select name="rep" defaultValue={repFilter} className={selectClass}>
               <option value="">All reps</option>
               {(reps ?? []).map((r) => (
                 <option key={r.id} value={r.id}>
@@ -115,14 +117,17 @@ export default async function ProspectsPage({
             </select>
           )}
 
-          <select name="sort" defaultValue={sort} className="rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-sm">
+          <select name="sort" defaultValue={sort} className={selectClass}>
             <option value="updated_desc">Recently updated</option>
             <option value="created_desc">Newest</option>
             <option value="containers_desc">Containers/week</option>
             <option value="name_asc">Name A–Z</option>
           </select>
 
-          <button type="submit" className="rounded-lg bg-slate-900 px-3.5 py-2 text-sm font-semibold text-white">
+          <button
+            type="submit"
+            className="rounded-lg bg-slate-900 px-3.5 py-2 text-sm font-semibold text-white dark:bg-slate-100 dark:text-slate-900"
+          >
             Apply
           </button>
         </div>
@@ -130,7 +135,7 @@ export default async function ProspectsPage({
 
       <div className="space-y-2 pb-4">
         {list.length === 0 && (
-          <p className="py-10 text-center text-sm text-slate-400">No prospects match these filters.</p>
+          <p className="py-10 text-center text-sm text-slate-400 dark:text-slate-500">No prospects match these filters.</p>
         )}
         {list.map((p) => (
           <ProspectCard key={p.id} prospect={p} showRep={scope === "all"} />

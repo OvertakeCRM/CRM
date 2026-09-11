@@ -56,12 +56,12 @@ export default function StageChanger({
       {open && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 md:items-center" onClick={() => !pendingStage && setOpen(false)}>
           <div
-            className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-t-2xl bg-white p-4 md:rounded-2xl"
+            className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-t-2xl bg-white p-4 dark:bg-slate-900 md:rounded-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {!pendingStage ? (
               <>
-                <h2 className="mb-3 text-lg font-bold text-slate-900">Update stage</h2>
+                <h2 className="mb-3 text-lg font-bold text-slate-900 dark:text-white">Update stage</h2>
                 <div className="grid grid-cols-1 gap-2">
                   {STAGES.map((stage) => (
                     <button
@@ -80,20 +80,20 @@ export default function StageChanger({
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="mt-3 w-full rounded-xl px-4 py-3 text-center text-sm font-medium text-slate-500"
+                  className="mt-3 w-full rounded-xl px-4 py-3 text-center text-sm font-medium text-slate-500 dark:text-slate-400"
                 >
                   Cancel
                 </button>
               </>
             ) : (
               <>
-                <h2 className="mb-3 text-lg font-bold text-slate-900">
+                <h2 className="mb-3 text-lg font-bold text-slate-900 dark:text-white">
                   Move to {STAGE_META[pendingStage].label}?
                 </h2>
 
                 {pendingStage === "lost" && (
                   <div className="mb-4">
-                    <label className="mb-1.5 block text-sm font-medium text-slate-700">Loss reason</label>
+                    <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Loss reason</label>
                     <div className="grid grid-cols-2 gap-2">
                       {(Object.entries(LOSS_REASON_META) as [LossReason, string][]).map(([value, label]) => (
                         <button
@@ -101,7 +101,9 @@ export default function StageChanger({
                           type="button"
                           onClick={() => setLossReason(value)}
                           className={`rounded-lg border px-3 py-2.5 text-sm font-medium ${
-                            lossReason === value ? "border-blue-600 bg-blue-50 text-blue-700" : "border-slate-300 text-slate-600"
+                            lossReason === value
+                              ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-500 dark:bg-blue-950 dark:text-blue-300"
+                              : "border-slate-300 text-slate-600 dark:border-slate-700 dark:text-slate-300"
                           }`}
                         >
                           {label}
@@ -111,20 +113,20 @@ export default function StageChanger({
                   </div>
                 )}
 
-                <label className="mb-1.5 block text-sm font-medium text-slate-700">Note (optional)</label>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Note (optional)</label>
                 <textarea
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   rows={3}
                   placeholder="What happened?"
-                  className="mb-4 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="mb-4 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
 
                 <div className="flex gap-2">
                   <button
                     type="button"
                     onClick={() => setPendingStage(null)}
-                    className="flex-1 rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-600"
+                    className="flex-1 rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-600 dark:border-slate-700 dark:text-slate-300"
                   >
                     Back
                   </button>

@@ -18,12 +18,12 @@ export default function ProspectAdminControls({
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <label className="text-sm font-medium text-slate-500">Assigned to</label>
+      <label className="text-sm font-medium text-slate-500 dark:text-slate-400">Assigned to</label>
       <select
         defaultValue={assignedRepId}
         disabled={isPending}
         onChange={(e) => startTransition(() => reassignProspect(prospectId, e.target.value))}
-        className="rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm"
+        className="rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-white"
       >
         {reps.map((rep) => (
           <option key={rep.id} value={rep.id}>
@@ -43,7 +43,7 @@ export default function ProspectAdminControls({
             });
           }
         }}
-        className="ml-auto text-sm font-medium text-rose-600"
+        className="ml-auto text-sm font-medium text-rose-600 dark:text-rose-400"
       >
         Delete
       </button>

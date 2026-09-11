@@ -82,7 +82,7 @@ export default function NoteInput({
           onChange={(e) => setNote(e.target.value)}
           rows={2}
           placeholder="Add a note…"
-          className="flex-1 rounded-lg border border-slate-300 px-3 py-2.5 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="flex-1 rounded-lg border border-slate-300 px-3 py-2.5 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
         />
         {voiceSupported && (
           <button
@@ -90,7 +90,9 @@ export default function NoteInput({
             onClick={toggleRecording}
             aria-label={recording ? "Stop recording" : "Dictate note"}
             className={`flex size-11 shrink-0 items-center justify-center rounded-full border ${
-              recording ? "border-rose-500 bg-rose-50 text-rose-600" : "border-slate-300 text-slate-600"
+              recording
+                ? "border-rose-500 bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-300"
+                : "border-slate-300 text-slate-600 dark:border-slate-700 dark:text-slate-300"
             }`}
           >
             {recording ? <Square size={18} /> : <Mic size={18} />}
@@ -101,7 +103,7 @@ export default function NoteInput({
         type="button"
         onClick={submit}
         disabled={isPending || !note.trim()}
-        className="mt-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"
+        className="mt-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-40 dark:bg-slate-100 dark:text-slate-900"
       >
         {isPending ? "Saving…" : "Add note"}
       </button>

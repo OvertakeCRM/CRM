@@ -5,6 +5,26 @@ import { useGoogleMaps } from "@/lib/useGoogleMaps";
 import { STAGE_META, STAGE_PIN_COLOR } from "@/lib/stages";
 import type { ProspectWithRep } from "@/lib/database.types";
 
+const DARK_MAP_STYLES: google.maps.MapTypeStyle[] = [
+  { elementType: "geometry", stylers: [{ color: "#1e293b" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#1e293b" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#94a3b8" }] },
+  { featureType: "administrative", elementType: "geometry", stylers: [{ color: "#475569" }] },
+  { featureType: "poi", elementType: "geometry", stylers: [{ color: "#334155" }] },
+  { featureType: "poi", elementType: "labels.text.fill", stylers: [{ color: "#94a3b8" }] },
+  { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#14532d" }] },
+  { featureType: "road", elementType: "geometry", stylers: [{ color: "#334155" }] },
+  { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#94a3b8" }] },
+  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#475569" }] },
+  { featureType: "transit", elementType: "geometry", stylers: [{ color: "#334155" }] },
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#0f172a" }] },
+  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#64748b" }] },
+];
+
+function isDarkMode(): boolean {
+  return document.documentElement.classList.contains("dark");
+}
+
 export default function MapView({ prospects }: { prospects: ProspectWithRep[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { ready, error } = useGoogleMaps();
@@ -20,7 +40,14 @@ export default function MapView({ prospects }: { prospects: ProspectWithRep[] })
       mapTypeControl: false,
       streetViewControl: false,
       fullscreenControl: false,
+      styles: isDarkMode() ? DARK_MAP_STYLES : undefined,
     });
+
+    // The map is created once; watch for theme toggles afterward and restyle live.
+    const observer = new MutationObserver(() => {
+      map.setOptions({ styles: isDarkMode() ? DARK_MAP_STYLES : undefined });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
     const bounds = new google.maps.LatLngBounds();
     const infoWindow = new google.maps.InfoWindow();
@@ -59,12 +86,13 @@ export default function MapView({ prospects }: { prospects: ProspectWithRep[] })
     if (plottable.length > 1) map.fitBounds(bounds);
     else if (plottable.length === 1) map.setCenter(bounds.getCenter());
 
+    return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, prospects]);
 
   if (error) {
     return (
-      <div className="flex h-80 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-400">
+      <div className="flex h-80 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-500">
         Map unavailable — set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY.
       </div>
     );
@@ -74,7 +102,7 @@ export default function MapView({ prospects }: { prospects: ProspectWithRep[] })
     <div>
       <div ref={containerRef} className="h-[calc(100vh-160px)] w-full md:h-[600px] md:rounded-xl" />
       {prospects.length > plottable.length && (
-        <p className="mt-2 px-4 text-xs text-slate-400 md:px-0">
+        <p className="mt-2 px-4 text-xs text-slate-400 dark:text-slate-500 md:px-0">
           {prospects.length - plottable.length} prospect(s) don&apos;t have a mapped address yet.
         </p>
       )}

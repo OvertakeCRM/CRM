@@ -25,7 +25,7 @@ export default async function MapPage() {
   return (
     <div className="pt-4">
       <div className="mb-4 flex items-center justify-between px-4 md:px-0">
-        <h1 className="text-xl font-bold text-slate-900">Territory map</h1>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-white">Territory map</h1>
         <Link
           href="/route"
           className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700"

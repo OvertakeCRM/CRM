@@ -23,8 +23,8 @@ export default async function PipelinePage() {
   return (
     <div className="pt-4">
       <div className="mb-4 flex items-center justify-between px-4 md:px-0">
-        <h1 className="text-xl font-bold text-slate-900">Pipeline</h1>
-        <p className="text-sm text-slate-400">Drag a card to change its stage</p>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-white">Pipeline</h1>
+        <p className="text-sm text-slate-400 dark:text-slate-500">Drag a card to change its stage</p>
       </div>
       <KanbanBoard initialProspects={(data ?? []) as unknown as ProspectWithRep[]} />
     </div>

@@ -38,7 +38,7 @@ export default function QuickLogButtons({
           type="button"
           disabled={isPending}
           onClick={() => log(label)}
-          className="rounded-full border border-slate-300 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 active:bg-slate-100 disabled:opacity-60"
+          className="rounded-full border border-slate-300 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 active:bg-slate-100 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:active:bg-slate-700"
         >
           {label}
         </button>

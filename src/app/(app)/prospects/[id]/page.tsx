@@ -47,31 +47,37 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
       <div className="mb-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h1 className="text-xl font-bold text-slate-900">{p.warehouse_name}</h1>
-            <p className="text-sm text-slate-500">{p.address}</p>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">{p.warehouse_name}</h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400">{p.address}</p>
           </div>
           <StageBadge stage={p.stage} className="shrink-0" />
         </div>
 
         {p.stage === "lost" && p.loss_reason && (
-          <p className="mt-2 text-sm text-rose-600">Lost — {LOSS_REASON_META[p.loss_reason]}</p>
+          <p className="mt-2 text-sm text-rose-600 dark:text-rose-400">Lost — {LOSS_REASON_META[p.loss_reason]}</p>
         )}
 
         {p.containers_per_week != null && p.price_per_container != null ? (
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
             {p.containers_per_week} containers/wk &times; {formatCurrency(p.price_per_container)} ={" "}
-            <span className="text-slate-700">{formatCurrency(p.containers_per_week * p.price_per_container)}/wk</span>
+            <span className="text-slate-700 dark:text-slate-300">
+              {formatCurrency(p.containers_per_week * p.price_per_container)}/wk
+            </span>
           </p>
         ) : (
           <>
-            {p.containers_per_week != null && <p className="mt-2 text-sm text-slate-500">{p.containers_per_week} containers/wk</p>}
+            {p.containers_per_week != null && (
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{p.containers_per_week} containers/wk</p>
+            )}
             {p.price_per_container != null && (
-              <p className="mt-2 text-sm text-slate-500">{formatCurrency(p.price_per_container)}/container</p>
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                {formatCurrency(p.price_per_container)}/container
+              </p>
             )}
           </>
         )}
 
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-500">
+        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-500 dark:text-slate-400">
           {p.assigned_rep && <span>Rep: {p.assigned_rep.full_name}</span>}
           {p.next_follow_up_date && <span>Follow up: {p.next_follow_up_date}</span>}
           <span>Updated {formatDistanceToNow(new Date(p.updated_at), { addSuffix: true })}</span>
@@ -89,22 +95,22 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
       </div>
 
       {(p.dm_name || p.competitor) && (
-        <div className="mb-5 rounded-xl border border-slate-200 bg-white p-4 text-sm">
+        <div className="mb-5 rounded-xl border border-slate-200 bg-white p-4 text-sm dark:border-slate-800 dark:bg-slate-900">
           {p.dm_name && (
-            <p>
-              <span className="font-semibold text-slate-700">Decision maker:</span> {p.dm_name}
+            <p className="text-slate-700 dark:text-slate-300">
+              <span className="font-semibold text-slate-700 dark:text-slate-200">Decision maker:</span> {p.dm_name}
             </p>
           )}
           {p.competitor && (
-            <p className="mt-1">
-              <span className="font-semibold text-slate-700">Current competitor:</span> {p.competitor}
+            <p className="mt-1 text-slate-700 dark:text-slate-300">
+              <span className="font-semibold text-slate-700 dark:text-slate-200">Current competitor:</span> {p.competitor}
             </p>
           )}
         </div>
       )}
 
       <div className="mb-6">
-        <h2 className="mb-2 text-sm font-semibold text-slate-500">Photos</h2>
+        <h2 className="mb-2 text-sm font-semibold text-slate-500 dark:text-slate-400">Photos</h2>
         <PhotoUploader prospectId={p.id} photos={(photos ?? []) as Photo[]} />
       </div>
 

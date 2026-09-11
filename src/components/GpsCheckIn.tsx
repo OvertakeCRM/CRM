@@ -40,7 +40,7 @@ export default function GpsCheckIn({
       <button
         type="button"
         onClick={request}
-        className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-500"
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-500 dark:border-slate-700 dark:text-slate-400"
       >
         <Navigation2 size={15} />
         Check distance to this warehouse
@@ -49,17 +49,17 @@ export default function GpsCheckIn({
   }
 
   if (status === "loading") {
-    return <p className="text-center text-sm text-slate-400">Finding your location…</p>;
+    return <p className="text-center text-sm text-slate-400 dark:text-slate-500">Finding your location…</p>;
   }
 
   if (status === "denied" || status === "error") {
-    return <p className="text-center text-sm text-slate-400">{error}</p>;
+    return <p className="text-center text-sm text-slate-400 dark:text-slate-500">{error}</p>;
   }
 
   if (isHere && stage === "not_visited" && !checkedIn) {
     return (
-      <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-3">
-        <p className="mb-2 text-sm font-semibold text-emerald-800">You&apos;re here — mark as Visited?</p>
+      <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-3 dark:border-emerald-700 dark:bg-emerald-950">
+        <p className="mb-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">You&apos;re here — mark as Visited?</p>
         <button
           type="button"
           onClick={markVisited}
@@ -74,13 +74,13 @@ export default function GpsCheckIn({
 
   if (isHere || checkedIn) {
     return (
-      <p className="flex items-center gap-1.5 text-sm text-emerald-600">
+      <p className="flex items-center gap-1.5 text-sm text-emerald-600 dark:text-emerald-400">
         <CheckCircle2 size={15} /> You&apos;re at this location
       </p>
     );
   }
 
   return distanceKm != null ? (
-    <p className="text-center text-sm text-slate-400">~{formatDistanceKm(distanceKm)} away (straight-line)</p>
+    <p className="text-center text-sm text-slate-400 dark:text-slate-500">~{formatDistanceKm(distanceKm)} away (straight-line)</p>
   ) : null;
 }

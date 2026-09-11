@@ -13,15 +13,60 @@ export const STAGES: Stage[] = [
 ];
 
 export const STAGE_META: Record<Stage, { label: string; short: string; color: string; dot: string }> = {
-  not_visited: { label: "Not Visited", short: "New", color: "bg-slate-100 text-slate-700 border-slate-300", dot: "bg-slate-400" },
-  visited: { label: "Visited", short: "Visited", color: "bg-sky-100 text-sky-700 border-sky-300", dot: "bg-sky-500" },
-  contacted: { label: "Contacted", short: "Contacted", color: "bg-indigo-100 text-indigo-700 border-indigo-300", dot: "bg-indigo-500" },
-  decision_maker_engaged: { label: "Decision Maker Engaged", short: "DM Engaged", color: "bg-violet-100 text-violet-700 border-violet-300", dot: "bg-violet-500" },
-  interested_qualified: { label: "Interested / Qualified", short: "Qualified", color: "bg-amber-100 text-amber-700 border-amber-300", dot: "bg-amber-500" },
-  proposal_sent: { label: "Proposal / Quote Sent", short: "Proposal", color: "bg-orange-100 text-orange-700 border-orange-300", dot: "bg-orange-500" },
-  negotiating: { label: "Negotiating", short: "Negotiating", color: "bg-fuchsia-100 text-fuchsia-700 border-fuchsia-300", dot: "bg-fuchsia-500" },
-  sold_won: { label: "Sold / Won", short: "Won", color: "bg-emerald-100 text-emerald-700 border-emerald-300", dot: "bg-emerald-500" },
-  lost: { label: "Lost / Not Interested", short: "Lost", color: "bg-rose-100 text-rose-700 border-rose-300", dot: "bg-rose-500" },
+  not_visited: {
+    label: "Not Visited",
+    short: "New",
+    color: "bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600",
+    dot: "bg-slate-400",
+  },
+  visited: {
+    label: "Visited",
+    short: "Visited",
+    color: "bg-sky-100 text-sky-700 border-sky-300 dark:bg-sky-950 dark:text-sky-300 dark:border-sky-700",
+    dot: "bg-sky-500",
+  },
+  contacted: {
+    label: "Contacted",
+    short: "Contacted",
+    color: "bg-indigo-100 text-indigo-700 border-indigo-300 dark:bg-indigo-950 dark:text-indigo-300 dark:border-indigo-700",
+    dot: "bg-indigo-500",
+  },
+  decision_maker_engaged: {
+    label: "Decision Maker Engaged",
+    short: "DM Engaged",
+    color: "bg-violet-100 text-violet-700 border-violet-300 dark:bg-violet-950 dark:text-violet-300 dark:border-violet-700",
+    dot: "bg-violet-500",
+  },
+  interested_qualified: {
+    label: "Interested / Qualified",
+    short: "Qualified",
+    color: "bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-700",
+    dot: "bg-amber-500",
+  },
+  proposal_sent: {
+    label: "Proposal / Quote Sent",
+    short: "Proposal",
+    color: "bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-700",
+    dot: "bg-orange-500",
+  },
+  negotiating: {
+    label: "Negotiating",
+    short: "Negotiating",
+    color: "bg-fuchsia-100 text-fuchsia-700 border-fuchsia-300 dark:bg-fuchsia-950 dark:text-fuchsia-300 dark:border-fuchsia-700",
+    dot: "bg-fuchsia-500",
+  },
+  sold_won: {
+    label: "Sold / Won",
+    short: "Won",
+    color: "bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-700",
+    dot: "bg-emerald-500",
+  },
+  lost: {
+    label: "Lost / Not Interested",
+    short: "Lost",
+    color: "bg-rose-100 text-rose-700 border-rose-300 dark:bg-rose-950 dark:text-rose-300 dark:border-rose-700",
+    dot: "bg-rose-500",
+  },
 };
 
 export const OPEN_STAGES = STAGES.filter((s) => s !== "sold_won" && s !== "lost");
