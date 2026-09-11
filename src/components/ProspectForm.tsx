@@ -81,15 +81,32 @@ export default function ProspectForm({
           />
         </div>
 
-        <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Containers per week</label>
-          <input
-            name="containers_per_week"
-            type="number"
-            min={0}
-            inputMode="numeric"
-            className="w-full rounded-lg border border-slate-300 px-3 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-          />
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-slate-700">Containers per week</label>
+            <input
+              name="containers_per_week"
+              type="number"
+              min={0}
+              inputMode="numeric"
+              className="w-full rounded-lg border border-slate-300 px-3 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-slate-700">Price per container</label>
+            <div className="relative">
+              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">$</span>
+              <input
+                name="price_per_container"
+                type="number"
+                min={0}
+                step="0.01"
+                inputMode="decimal"
+                placeholder="0.00"
+                className="w-full rounded-lg border border-slate-300 py-3 pl-7 pr-3 text-base focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+          </div>
         </div>
 
         {isAdmin && (

@@ -11,12 +11,20 @@ export function computeStageCounts(prospects: Prospect[]) {
 export function computeContainerVolume(prospects: Prospect[]) {
   let inPipeline = 0;
   let won = 0;
+  let revenueInPipeline = 0;
+  let revenueWon = 0;
   for (const p of prospects) {
     const c = p.containers_per_week ?? 0;
-    if (p.stage === "sold_won") won += c;
-    else if (p.stage !== "lost") inPipeline += c;
+    const revenue = c * (p.price_per_container ?? 0);
+    if (p.stage === "sold_won") {
+      won += c;
+      revenueWon += revenue;
+    } else if (p.stage !== "lost") {
+      inPipeline += c;
+      revenueInPipeline += revenue;
+    }
   }
-  return { inPipeline, won };
+  return { inPipeline, won, revenueInPipeline, revenueWon };
 }
 
 export function computeStaleProspects(prospects: Prospect[], staleDays: number) {

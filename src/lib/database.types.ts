@@ -29,6 +29,7 @@ export interface Prospect {
   lat: number | null;
   lng: number | null;
   containers_per_week: number | null;
+  price_per_container: number | null;
   dm_name: string | null;
   dm_phone: string | null;
   dm_email: string | null;

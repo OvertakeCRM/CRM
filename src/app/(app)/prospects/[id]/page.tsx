@@ -9,6 +9,7 @@ import ProspectAdminControls from "@/components/ProspectAdminControls";
 import EditToggle from "@/components/EditToggle";
 import ProspectActivityWorkspace from "@/components/ProspectActivityWorkspace";
 import { LOSS_REASON_META } from "@/lib/stages";
+import { formatCurrency } from "@/lib/format";
 import type { ActivityLogEntry, Photo, Prospect } from "@/lib/database.types";
 
 export default async function ProspectDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -58,6 +59,12 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
 
         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-500">
           {p.containers_per_week != null && <span>{p.containers_per_week} containers/wk</span>}
+          {p.price_per_container != null && <span>{formatCurrency(p.price_per_container)}/container</span>}
+          {p.containers_per_week != null && p.price_per_container != null && (
+            <span className="font-medium text-slate-700">
+              {formatCurrency(p.containers_per_week * p.price_per_container)}/wk potential
+            </span>
+          )}
           {p.assigned_rep && <span>Rep: {p.assigned_rep.full_name}</span>}
           {p.next_follow_up_date && <span>Follow up: {p.next_follow_up_date}</span>}
           <span>Updated {formatDistanceToNow(new Date(p.updated_at), { addSuffix: true })}</span>

@@ -13,6 +13,7 @@ import {
   computeWinRate,
 } from "@/lib/dashboard";
 import type { ActivityLogEntry, Prospect, Profile } from "@/lib/database.types";
+import { formatCurrency } from "@/lib/format";
 
 export const metadata = { title: "Dashboard — Royal Westmont CRM" };
 
@@ -71,8 +72,16 @@ export default async function DashboardPage({
       <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4">
         <StatTile label="Open prospects" value={all.filter((p) => p.stage !== "sold_won" && p.stage !== "lost").length} />
         <StatTile label="Win rate" value={`${winRate}%`} sub="won vs. closed" />
-        <StatTile label="Containers/wk in pipeline" value={volume.inPipeline} />
-        <StatTile label="Containers/wk won" value={volume.won} />
+        <StatTile
+          label="Containers/wk in pipeline"
+          value={volume.inPipeline}
+          sub={volume.revenueInPipeline > 0 ? `${formatCurrency(volume.revenueInPipeline)}/wk potential` : undefined}
+        />
+        <StatTile
+          label="Containers/wk won"
+          value={volume.won}
+          sub={volume.revenueWon > 0 ? `${formatCurrency(volume.revenueWon)}/wk` : undefined}
+        />
       </div>
 
       <div className="mb-6 rounded-xl border border-slate-200 bg-white p-4">

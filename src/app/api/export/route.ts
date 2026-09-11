@@ -26,6 +26,11 @@ export async function GET() {
     address: p.address,
     stage: STAGE_META[p.stage].label,
     containers_per_week: p.containers_per_week ?? "",
+    price_per_container: p.price_per_container ?? "",
+    weekly_revenue_potential:
+      p.containers_per_week != null && p.price_per_container != null
+        ? (p.containers_per_week * p.price_per_container).toFixed(2)
+        : "",
     assigned_rep: p.assigned_rep?.full_name ?? "",
     decision_maker_name: p.dm_name ?? "",
     decision_maker_phone: p.dm_phone ?? "",
