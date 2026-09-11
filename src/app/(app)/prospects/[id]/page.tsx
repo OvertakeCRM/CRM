@@ -57,14 +57,21 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
           <p className="mt-2 text-sm text-rose-600">Lost — {LOSS_REASON_META[p.loss_reason]}</p>
         )}
 
+        {p.containers_per_week != null && p.price_per_container != null ? (
+          <p className="mt-2 text-sm text-slate-500">
+            {p.containers_per_week} containers/wk &times; {formatCurrency(p.price_per_container)} ={" "}
+            <span className="text-slate-700">{formatCurrency(p.containers_per_week * p.price_per_container)}/wk</span>
+          </p>
+        ) : (
+          <>
+            {p.containers_per_week != null && <p className="mt-2 text-sm text-slate-500">{p.containers_per_week} containers/wk</p>}
+            {p.price_per_container != null && (
+              <p className="mt-2 text-sm text-slate-500">{formatCurrency(p.price_per_container)}/container</p>
+            )}
+          </>
+        )}
+
         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-500">
-          {p.containers_per_week != null && <span>{p.containers_per_week} containers/wk</span>}
-          {p.price_per_container != null && <span>{formatCurrency(p.price_per_container)}/container</span>}
-          {p.containers_per_week != null && p.price_per_container != null && (
-            <span className="font-medium text-slate-700">
-              {formatCurrency(p.containers_per_week * p.price_per_container)}/wk potential
-            </span>
-          )}
           {p.assigned_rep && <span>Rep: {p.assigned_rep.full_name}</span>}
           {p.next_follow_up_date && <span>Follow up: {p.next_follow_up_date}</span>}
           <span>Updated {formatDistanceToNow(new Date(p.updated_at), { addSuffix: true })}</span>
