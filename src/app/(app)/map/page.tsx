@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { Navigation2 } from "lucide-react";
 import { requireUser } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import MapView from "@/components/MapView";
@@ -22,7 +24,16 @@ export default async function MapPage() {
 
   return (
     <div className="pt-4">
-      <h1 className="mb-4 px-4 text-xl font-bold text-slate-900 md:px-0">Territory map</h1>
+      <div className="mb-4 flex items-center justify-between px-4 md:px-0">
+        <h1 className="text-xl font-bold text-slate-900">Territory map</h1>
+        <Link
+          href="/route"
+          className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+        >
+          <Navigation2 size={15} />
+          Plan today&apos;s route
+        </Link>
+      </div>
       <MapView prospects={(data ?? []) as unknown as ProspectWithRep[]} />
     </div>
   );
