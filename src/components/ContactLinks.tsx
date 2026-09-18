@@ -5,15 +5,18 @@ const tileClass =
 const iconClass = "text-blue-600 dark:text-blue-400";
 
 export default function ContactLinks({
-  phone,
+  cellPhone,
+  workPhone,
   email,
   address,
 }: {
-  phone?: string | null;
+  cellPhone?: string | null;
+  workPhone?: string | null;
   email?: string | null;
   address: string;
 }) {
   const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const callPhone = cellPhone || workPhone;
 
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -22,17 +25,17 @@ export default function ContactLinks({
         Directions
       </a>
       <a
-        href={phone ? `tel:${phone}` : undefined}
-        aria-disabled={!phone}
-        className={`${tileClass} ${!phone ? "pointer-events-none opacity-40" : ""}`}
+        href={callPhone ? `tel:${callPhone}` : undefined}
+        aria-disabled={!callPhone}
+        className={`${tileClass} ${!callPhone ? "pointer-events-none opacity-40" : ""}`}
       >
         <Phone size={20} className={iconClass} />
         Call
       </a>
       <a
-        href={phone ? `sms:${phone}` : undefined}
-        aria-disabled={!phone}
-        className={`${tileClass} ${!phone ? "pointer-events-none opacity-40" : ""}`}
+        href={cellPhone ? `sms:${cellPhone}` : undefined}
+        aria-disabled={!cellPhone}
+        className={`${tileClass} ${!cellPhone ? "pointer-events-none opacity-40" : ""}`}
       >
         <MessageSquare size={20} className={iconClass} />
         Text

@@ -91,14 +91,19 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
       )}
 
       <div className="mb-5">
-        <ContactLinks phone={p.dm_phone} email={p.dm_email} address={p.address} />
+        <ContactLinks cellPhone={p.dm_phone_cell} workPhone={p.dm_phone_work} email={p.dm_email} address={p.address} />
       </div>
 
-      {(p.dm_name || p.competitor) && (
+      {(p.dm_name || p.dm_phone_work || p.competitor) && (
         <div className="mb-5 rounded-xl border border-slate-200 bg-white p-4 text-sm dark:border-slate-800 dark:bg-slate-900">
           {p.dm_name && (
             <p className="text-slate-700 dark:text-slate-300">
               <span className="font-semibold text-slate-700 dark:text-slate-200">Decision maker:</span> {p.dm_name}
+            </p>
+          )}
+          {p.dm_phone_work && (
+            <p className="mt-1 text-slate-700 dark:text-slate-300">
+              <span className="font-semibold text-slate-700 dark:text-slate-200">Work phone:</span> {p.dm_phone_work}
             </p>
           )}
           {p.competitor && (

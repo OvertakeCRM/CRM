@@ -80,10 +80,17 @@ export default function ProspectEditForm({ prospect, onDone }: { prospect: Prosp
         <legend className="px-1 text-sm font-semibold text-slate-500 dark:text-slate-400">Decision maker</legend>
         <input name="dm_name" placeholder="Name" defaultValue={prospect.dm_name ?? ""} className={inputClass} />
         <input
-          name="dm_phone"
+          name="dm_phone_cell"
           type="tel"
-          placeholder="Phone"
-          defaultValue={prospect.dm_phone ?? ""}
+          placeholder="Cell phone"
+          defaultValue={prospect.dm_phone_cell ?? ""}
+          className={inputClass}
+        />
+        <input
+          name="dm_phone_work"
+          type="tel"
+          placeholder="Work phone"
+          defaultValue={prospect.dm_phone_work ?? ""}
           className={inputClass}
         />
         <input

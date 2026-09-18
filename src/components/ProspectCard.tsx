@@ -24,9 +24,9 @@ export default function ProspectCard({ prospect, showRep }: { prospect: Prospect
             <Package size={14} /> {prospect.containers_per_week}/wk
           </span>
         )}
-        {prospect.dm_phone && (
+        {(prospect.dm_phone_cell || prospect.dm_phone_work) && (
           <span className="flex items-center gap-1">
-            <Phone size={14} /> {prospect.dm_phone}
+            <Phone size={14} /> {prospect.dm_phone_cell || prospect.dm_phone_work}
           </span>
         )}
         {showRep && prospect.assigned_rep && <span>· {prospect.assigned_rep.full_name}</span>}

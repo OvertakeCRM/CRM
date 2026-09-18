@@ -31,7 +31,8 @@ export interface Prospect {
   containers_per_week: number | null;
   price_per_container: number | null;
   dm_name: string | null;
-  dm_phone: string | null;
+  dm_phone_cell: string | null;
+  dm_phone_work: string | null;
   dm_email: string | null;
   competitor: string | null;
   assigned_rep_id: string;

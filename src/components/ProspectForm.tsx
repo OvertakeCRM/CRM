@@ -124,7 +124,8 @@ export default function ProspectForm({
         <fieldset className="space-y-4 rounded-xl border border-slate-200 p-4 dark:border-slate-800">
           <legend className="px-1 text-sm font-semibold text-slate-500 dark:text-slate-400">Decision maker (optional)</legend>
           <input name="dm_name" placeholder="Name" className={`${inputClass} py-2.5`} />
-          <input name="dm_phone" type="tel" placeholder="Phone" className={`${inputClass} py-2.5`} />
+          <input name="dm_phone_cell" type="tel" placeholder="Cell phone" className={`${inputClass} py-2.5`} />
+          <input name="dm_phone_work" type="tel" placeholder="Work phone" className={`${inputClass} py-2.5`} />
           <input name="dm_email" type="email" placeholder="Email" className={`${inputClass} py-2.5`} />
           <input name="competitor" placeholder="Current competitor (if known)" className={`${inputClass} py-2.5`} />
         </fieldset>
