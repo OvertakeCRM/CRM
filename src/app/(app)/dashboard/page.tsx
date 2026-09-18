@@ -56,13 +56,14 @@ export default async function DashboardPage({
   const all = (prospects ?? []) as Prospect[];
   const repList = (reps ?? []) as Profile[];
   const staleDays = settings?.stale_days ?? 14;
+  const periodProspects = all.filter((p) => new Date(p.created_at).getTime() >= periodStart.getTime());
 
   const stageCounts = computeStageCounts(all);
   const volume = computeContainerVolume(all);
   const stale = computeStaleProspects(all, staleDays);
   const won = computeRecentlyWon(all);
   const lossBreakdown = computeLossBreakdown(all);
-  const leaderboard = computeLeaderboard(repList, (periodActivity ?? []) as unknown as ActivityLogEntry[]);
+  const leaderboard = computeLeaderboard(repList, (periodActivity ?? []) as unknown as ActivityLogEntry[], periodProspects);
   const winRate = computeWinRate(all);
   const totalLost = Object.values(lossBreakdown).reduce((a, b) => a + b, 0);
   const maxStageCount = Math.max(1, ...Object.values(stageCounts));
@@ -139,15 +140,17 @@ export default async function DashboardPage({
             <thead>
               <tr className="text-left text-xs text-slate-400 dark:text-slate-500">
                 <th className="pb-1 font-medium">Rep</th>
+                <th className="pb-1 font-medium">Added</th>
                 <th className="pb-1 font-medium">Visited</th>
                 <th className="pb-1 font-medium">Contacted</th>
                 <th className="pb-1 font-medium">Won</th>
               </tr>
             </thead>
             <tbody>
-              {leaderboard.map(({ rep, visited, contacted, won: wonCount }) => (
+              {leaderboard.map(({ rep, added, visited, contacted, won: wonCount }) => (
                 <tr key={rep.id} className="border-t border-slate-100 dark:border-slate-800">
                   <td className="py-1.5 font-medium text-slate-800 dark:text-slate-200">{rep.full_name}</td>
+                  <td className="py-1.5 text-slate-600 dark:text-slate-300">{added}</td>
                   <td className="py-1.5 text-slate-600 dark:text-slate-300">{visited}</td>
                   <td className="py-1.5 text-slate-600 dark:text-slate-300">{contacted}</td>
                   <td className="py-1.5 text-slate-600 dark:text-slate-300">{wonCount}</td>
@@ -155,7 +158,7 @@ export default async function DashboardPage({
               ))}
               {leaderboard.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="py-4 text-center text-slate-400 dark:text-slate-500">
+                  <td colSpan={5} className="py-4 text-center text-slate-400 dark:text-slate-500">
                     No reps yet.
                   </td>
                 </tr>

@@ -53,12 +53,14 @@ export function computeLossBreakdown(prospects: Prospect[]) {
 export function computeLeaderboard(
   reps: Profile[],
   periodActivity: ActivityLogEntry[],
+  periodProspects: Prospect[] = [],
 ) {
   return reps
     .map((rep) => {
       const mine = periodActivity.filter((a) => a.rep_id === rep.id);
       return {
         rep,
+        added: periodProspects.filter((p) => p.created_by === rep.id).length,
         visited: mine.filter((a) => a.new_stage === "visited").length,
         contacted: mine.filter((a) => a.new_stage === "contacted").length,
         won: mine.filter((a) => a.new_stage === "sold_won").length,
