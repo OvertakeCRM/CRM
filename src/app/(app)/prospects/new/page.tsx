@@ -2,7 +2,7 @@ import { requireUser } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import ProspectForm from "@/components/ProspectForm";
 
-export const metadata = { title: "New prospect — Royal Westmont CRM" };
+export const metadata = { title: "New prospect — Overtake CRM" };
 
 export default async function NewProspectPage() {
   const user = await requireUser();

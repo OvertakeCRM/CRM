@@ -4,7 +4,7 @@ import InviteRepForm from "@/components/InviteRepForm";
 import RoleToggle from "@/components/RoleToggle";
 import type { Profile } from "@/lib/database.types";
 
-export const metadata = { title: "Users — Royal Westmont CRM" };
+export const metadata = { title: "Users — Overtake CRM" };
 
 export default async function UsersPage() {
   const user = await requireAdmin();

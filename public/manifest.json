@@ -1,7 +1,7 @@
 {
-  "name": "Royal Westmont CRM",
-  "short_name": "Westmont CRM",
-  "description": "Warehouse prospect tracker for Royal Westmont sales reps.",
+  "name": "Overtake CRM",
+  "short_name": "Overtake",
+  "description": "Warehouse prospect tracker for Overtake sales reps.",
   "start_url": "/prospects",
   "display": "standalone",
   "background_color": "#f8fafc",

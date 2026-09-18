@@ -3,7 +3,7 @@ import Link from "next/link";
 import LoginForm from "./LoginForm";
 import ThemeToggle from "@/components/ThemeToggle";
 
-export const metadata = { title: "Sign in — Royal Westmont CRM" };
+export const metadata = { title: "Sign in — Overtake CRM" };
 
 export default function LoginPage() {
   return (
@@ -11,7 +11,7 @@ export default function LoginPage() {
       <ThemeToggle className="absolute right-4 top-4" />
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Royal Westmont</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Overtake</h1>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Warehouse prospect tracker</p>
         </div>
 

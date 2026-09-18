@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import KanbanBoard from "@/components/KanbanBoard";
 import type { ProspectWithRep } from "@/lib/database.types";
 
-export const metadata = { title: "Pipeline — Royal Westmont CRM" };
+export const metadata = { title: "Pipeline — Overtake CRM" };
 
 export default async function PipelinePage() {
   const user = await requireUser();

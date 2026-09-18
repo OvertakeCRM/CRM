@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Royal Westmont CRM",
-  description: "Warehouse prospect tracker for Royal Westmont sales reps.",
+  title: "Overtake CRM",
+  description: "Warehouse prospect tracker for Overtake sales reps.",
   manifest: "/manifest.json",
-  appleWebApp: { capable: true, statusBarStyle: "default", title: "Westmont CRM" },
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "Overtake CRM" },
 };
 
 export const viewport: Viewport = {

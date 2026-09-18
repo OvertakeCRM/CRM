@@ -1,4 +1,4 @@
-# Royal Westmont CRM
+# Overtake CRM
 
 A mobile-first CRM for tracking prospective warehouse clients through the sales pipeline — built to replace a spreadsheet, not compete with Salesforce.
 
@@ -47,7 +47,7 @@ There's no public sign-up screen (sales CRMs shouldn't have one) — accounts ar
 2. In **SQL Editor**, run:
    ```sql
    update public.profiles set role = 'admin'
-   where id = (select id from auth.users where email = 'you@royalwestmont.com');
+   where id = (select id from auth.users where email = 'you@overtakecrm.com');
    ```
 3. Sign in at `/login`. From **Users**, invite the rest of your sales team — they'll get an email to set their password.
 
@@ -68,4 +68,4 @@ There's no public sign-up screen (sales CRMs shouldn't have one) — accounts ar
 
 ## Deploying
 
-Push to a Git repo and import it into [Vercel](https://vercel.com/new), adding the same environment variables from `.env.local`. Set `NEXT_PUBLIC_SITE_URL` to your production URL, and update the Supabase **Site URL** / redirect URLs to match.
+Push to a Git repo and import it into [Vercel](https://vercel.com/new), adding the same environment variables from `.env.local`. Set `NEXT_PUBLIC_SITE_URL` to your production URL (e.g. `https://overtakecrm.com`), and update the Supabase **Site URL** / redirect URLs and the Google Maps API key's HTTP referrer restriction to match.

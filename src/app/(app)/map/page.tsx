@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import MapView from "@/components/MapView";
 import type { ProspectWithRep } from "@/lib/database.types";
 
-export const metadata = { title: "Map — Royal Westmont CRM" };
+export const metadata = { title: "Map — Overtake CRM" };
 
 export default async function MapPage() {
   const user = await requireUser();

@@ -5,7 +5,7 @@ import NearbyProspects from "@/components/NearbyProspects";
 import { STAGES, STAGE_META } from "@/lib/stages";
 import type { ProspectWithRep, Stage } from "@/lib/database.types";
 
-export const metadata = { title: "Prospects — Royal Westmont CRM" };
+export const metadata = { title: "Prospects — Overtake CRM" };
 
 type SortKey = "updated_desc" | "created_desc" | "containers_desc" | "name_asc";
 

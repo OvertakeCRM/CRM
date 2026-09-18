@@ -22,7 +22,7 @@ export default function TopBar({ user }: { user: CurrentUser }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
         <div className="flex items-center gap-8">
           <Link href="/prospects" className="text-lg font-bold text-slate-900 dark:text-white">
-            Royal Westmont
+            Overtake
           </Link>
           <nav className="flex items-center gap-1">
             {links.map(({ href, label, icon: Icon }) => (

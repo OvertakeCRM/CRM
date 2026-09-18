@@ -15,7 +15,7 @@ import {
 import type { ActivityLogEntry, Prospect, Profile } from "@/lib/database.types";
 import { formatCurrency } from "@/lib/format";
 
-export const metadata = { title: "Dashboard — Royal Westmont CRM" };
+export const metadata = { title: "Dashboard — Overtake CRM" };
 
 const cardClass = "rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900";
 

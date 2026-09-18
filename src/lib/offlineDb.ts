@@ -34,7 +34,7 @@ let dbPromise: Promise<IDBPDatabase<OfflineDBSchema>> | null = null;
 function getDb() {
   if (typeof indexedDB === "undefined") return null;
   if (!dbPromise) {
-    dbPromise = openDB<OfflineDBSchema>("royal-westmont-crm-offline", 1, {
+    dbPromise = openDB<OfflineDBSchema>("overtake-crm-offline", 1, {
       upgrade(db) {
         const store = db.createObjectStore("queue", { keyPath: "id" });
         store.createIndex("prospectId", "prospectId");

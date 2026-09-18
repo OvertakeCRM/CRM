@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import RoutePlanner from "@/components/RoutePlanner";
 import type { ProspectWithRep } from "@/lib/database.types";
 
-export const metadata = { title: "Route — Royal Westmont CRM" };
+export const metadata = { title: "Route — Overtake CRM" };
 
 export default async function RoutePage() {
   const user = await requireUser();
