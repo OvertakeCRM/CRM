@@ -32,7 +32,6 @@ export default function ProspectForm({
   const [lat, setLat] = useState<number | null>(null);
   const [lng, setLng] = useState<number | null>(null);
   const [name, setName] = useState("");
-  const [confirmDuplicate, setConfirmDuplicate] = useState(false);
   const [similar, setSimilar] = useState<SimilarProspect[] | null>(null);
   const [checking, startChecking] = useTransition();
 
@@ -46,9 +45,11 @@ export default function ProspectForm({
   }, [state, name, address]);
 
   function createAnyway() {
-    setConfirmDuplicate(true);
     setSimilar(null);
-    requestAnimationFrame(() => formRef.current?.requestSubmit());
+    if (!formRef.current) return;
+    const fd = new FormData(formRef.current);
+    fd.set("confirm_duplicate", "true");
+    formAction(fd);
   }
 
   return (
@@ -56,7 +57,7 @@ export default function ProspectForm({
       <form ref={formRef} action={formAction} className="space-y-5">
         <input type="hidden" name="lat" value={lat ?? ""} />
         <input type="hidden" name="lng" value={lng ?? ""} />
-        <input type="hidden" name="confirm_duplicate" value={confirmDuplicate ? "true" : "false"} />
+        <input type="hidden" name="confirm_duplicate" value="false" />
 
         <div>
           <label className={labelClass}>Warehouse name *</label>
@@ -66,7 +67,6 @@ export default function ProspectForm({
             value={name}
             onChange={(e) => {
               setName(e.target.value);
-              setConfirmDuplicate(false);
             }}
             className={inputClass}
           />
@@ -79,7 +79,6 @@ export default function ProspectForm({
               setAddress(r.address);
               setLat(r.lat);
               setLng(r.lng);
-              setConfirmDuplicate(false);
             }}
           />
         </div>
