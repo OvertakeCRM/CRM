@@ -12,9 +12,26 @@
 }
 
 .dark {
-  --background: #020617;
+  --background: #000000;
   --foreground: #f1f5f9;
   color-scheme: dark;
+}
+
+/* F1-inspired red/black theme: remap Tailwind's whole "blue" scale to red so
+   every existing blue-* accent class (buttons, links, focus rings, active
+   states) renders red without touching each component. */
+@theme {
+  --color-blue-50: #fef2f2;
+  --color-blue-100: #fee2e2;
+  --color-blue-200: #fecaca;
+  --color-blue-300: #fca5a5;
+  --color-blue-400: #f87171;
+  --color-blue-500: #ef4444;
+  --color-blue-600: #e10600;
+  --color-blue-700: #b91c1c;
+  --color-blue-800: #991b1b;
+  --color-blue-900: #7f1d1d;
+  --color-blue-950: #450a0a;
 }
 
 @theme inline {

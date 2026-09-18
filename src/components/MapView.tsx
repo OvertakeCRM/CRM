@@ -76,7 +76,7 @@ export default function MapView({ prospects }: { prospects: ProspectWithRep[] })
             <p style="font-weight:600;margin:0 0 2px">${p.warehouse_name}</p>
             <p style="margin:0 0 2px;color:#64748b;font-size:12px">${p.address}</p>
             <p style="margin:0 0 6px;font-size:12px">${STAGE_META[p.stage].label}</p>
-            <a href="/prospects/${p.id}" style="color:#2563eb;font-size:12px;font-weight:600">View prospect →</a>
+            <a href="/prospects/${p.id}" style="color:#e10600;font-size:12px;font-weight:600">View prospect →</a>
           </div>
         `);
         infoWindow.open({ map, anchor: marker });

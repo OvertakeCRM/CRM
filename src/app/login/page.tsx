@@ -9,6 +9,12 @@ export default function LoginPage() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 py-12 dark:bg-slate-950">
       <ThemeToggle className="absolute right-4 top-4" />
+      <Link
+        href="/"
+        className="absolute left-4 top-4 text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+      >
+        ← Back to home
+      </Link>
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Overtake</h1>
