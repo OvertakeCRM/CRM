@@ -23,6 +23,7 @@ export default async function ProspectsPage({
   const repFilter = params.rep ?? "";
   const q = params.q?.trim() ?? "";
   const sort = (params.sort as SortKey | undefined) ?? "updated_desc";
+  const followup = params.followup === "due" || params.followup === "upcoming" ? params.followup : "";
 
   let query = supabase
     .from("prospects")
@@ -36,6 +37,18 @@ export default async function ProspectsPage({
 
   if (stageFilter) query = query.eq("stage", stageFilter);
   if (q) query = query.or(`warehouse_name.ilike.%${q}%,address.ilike.%${q}%`);
+
+  if (followup) {
+    const today = new Date().toISOString().slice(0, 10);
+    query = query.not("next_follow_up_date", "is", null);
+    if (followup === "due") {
+      query = query.lte("next_follow_up_date", today);
+    } else {
+      const in7 = new Date();
+      in7.setDate(in7.getDate() + 7);
+      query = query.gt("next_follow_up_date", today).lte("next_follow_up_date", in7.toISOString().slice(0, 10));
+    }
+  }
 
   const sortMap: Record<SortKey, { column: string; ascending: boolean }> = {
     updated_desc: { column: "updated_at", ascending: false },
@@ -116,6 +129,12 @@ export default async function ProspectsPage({
               ))}
             </select>
           )}
+
+          <select name="followup" defaultValue={followup} className={selectClass}>
+            <option value="">Any follow-up date</option>
+            <option value="due">Due for follow-up</option>
+            <option value="upcoming">Upcoming (7 days)</option>
+          </select>
 
           <select name="sort" defaultValue={sort} className={selectClass}>
             <option value="updated_desc">Recently updated</option>

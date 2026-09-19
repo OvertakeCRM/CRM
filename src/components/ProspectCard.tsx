@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import { Package, Phone } from "lucide-react";
+import { Package, Phone, CalendarClock } from "lucide-react";
 import StageBadge from "@/components/StageBadge";
 import type { ProspectWithRep } from "@/lib/database.types";
+
+function followUpClass(dateStr: string) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (dateStr <= today) return "text-rose-600 dark:text-rose-400";
+  return "text-amber-600 dark:text-amber-400";
+}
 
 export default function ProspectCard({ prospect, showRep }: { prospect: ProspectWithRep; showRep?: boolean }) {
   return (
@@ -27,6 +33,11 @@ export default function ProspectCard({ prospect, showRep }: { prospect: Prospect
         {(prospect.dm_phone_cell || prospect.dm_phone_work) && (
           <span className="flex items-center gap-1">
             <Phone size={14} /> {prospect.dm_phone_cell || prospect.dm_phone_work}
+          </span>
+        )}
+        {prospect.next_follow_up_date && (
+          <span className={`flex items-center gap-1 font-medium ${followUpClass(prospect.next_follow_up_date)}`}>
+            <CalendarClock size={14} /> {prospect.next_follow_up_date}
           </span>
         )}
         {showRep && prospect.assigned_rep && <span>· {prospect.assigned_rep.full_name}</span>}
