@@ -54,7 +54,14 @@ export default function ProspectForm({
 
   return (
     <>
-      <form ref={formRef} action={formAction} className="space-y-5">
+      <form
+        ref={formRef}
+        onSubmit={(e) => {
+          e.preventDefault();
+          formAction(new FormData(e.currentTarget));
+        }}
+        className="space-y-5"
+      >
         <input type="hidden" name="lat" value={lat ?? ""} />
         <input type="hidden" name="lng" value={lng ?? ""} />
         <input type="hidden" name="confirm_duplicate" value="false" />
