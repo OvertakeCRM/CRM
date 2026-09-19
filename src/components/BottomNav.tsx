@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { List, KanbanSquare, Map, LayoutDashboard, Plus } from "lucide-react";
+import { Sunrise, List, KanbanSquare, Map, LayoutDashboard, Plus } from "lucide-react";
 
 export default function BottomNav({ isAdmin }: { isAdmin: boolean }) {
   const pathname = usePathname();
 
   const items = [
+    { href: "/today", label: "Today", icon: Sunrise },
     { href: "/prospects", label: "Prospects", icon: List },
     { href: "/pipeline", label: "Pipeline", icon: KanbanSquare },
     { href: "/map", label: "Map", icon: Map },
