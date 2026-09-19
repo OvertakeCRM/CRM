@@ -8,16 +8,13 @@ import { toCsv } from "@/lib/csv";
 export async function GET() {
   const user = await getCurrentUser();
   if (!user) return new NextResponse("Unauthorized", { status: 401 });
+  if (user.role !== "admin") return new NextResponse("Forbidden", { status: 403 });
 
   const supabase = await createClient();
-  let query = supabase
+  const { data, error } = await supabase
     .from("prospects")
     .select("*, assigned_rep:profiles!prospects_assigned_rep_id_fkey(full_name)")
     .order("updated_at", { ascending: false });
-
-  if (user.role !== "admin") query = query.eq("assigned_rep_id", user.id);
-
-  const { data, error } = await query;
   if (error) return new NextResponse("Failed to export", { status: 500 });
 
   type Row = Prospect & { assigned_rep: { full_name: string } | null };

@@ -79,9 +79,11 @@ export default async function ProspectsPage({
         <h1 className="text-xl font-bold text-slate-900 dark:text-white">Prospects</h1>
         <div className="flex items-center gap-3">
           <span className="hidden text-sm text-slate-400 dark:text-slate-500 sm:inline">{list.length} shown</span>
-          <a href="/api/export" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">
-            Export CSV
-          </a>
+          {user.role === "admin" && (
+            <a href="/api/export" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">
+              Export CSV
+            </a>
+          )}
         </div>
       </div>
 
