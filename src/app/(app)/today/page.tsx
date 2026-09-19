@@ -37,6 +37,7 @@ export default async function TodayPage() {
       .eq("assigned_rep_id", user.id)
       .not("next_follow_up_date", "is", null)
       .lte("next_follow_up_date", today)
+      .not("stage", "in", "(sold_won,lost)")
       .order("next_follow_up_date", { ascending: true }),
     supabase
       .from("activity_log")

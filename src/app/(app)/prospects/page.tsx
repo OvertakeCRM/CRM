@@ -40,7 +40,7 @@ export default async function ProspectsPage({
 
   if (followup) {
     const today = new Date().toISOString().slice(0, 10);
-    query = query.not("next_follow_up_date", "is", null);
+    query = query.not("next_follow_up_date", "is", null).not("stage", "in", "(sold_won,lost)");
     if (followup === "due") {
       query = query.lte("next_follow_up_date", today);
     } else {
