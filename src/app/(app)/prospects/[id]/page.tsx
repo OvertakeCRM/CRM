@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import StageBadge from "@/components/StageBadge";
 import PhotoUploader from "@/components/PhotoUploader";
 import ContactLinks from "@/components/ContactLinks";
+import EmailTemplates from "@/components/EmailTemplates";
 import ProspectAdminControls from "@/components/ProspectAdminControls";
 import EditToggle from "@/components/EditToggle";
 import ProspectActivityWorkspace from "@/components/ProspectActivityWorkspace";
@@ -113,6 +114,17 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
           )}
         </div>
       )}
+
+      <div className="mb-6">
+        <h2 className="mb-2 text-sm font-semibold text-slate-500 dark:text-slate-400">Email templates</h2>
+        <EmailTemplates
+          email={p.dm_email}
+          contactName={p.dm_name}
+          warehouseName={p.warehouse_name}
+          repName={user.full_name}
+          currentStage={p.stage}
+        />
+      </div>
 
       <div className="mb-6">
         <h2 className="mb-2 text-sm font-semibold text-slate-500 dark:text-slate-400">Photos</h2>
