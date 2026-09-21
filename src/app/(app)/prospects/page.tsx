@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireUser } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import ProspectCard from "@/components/ProspectCard";
@@ -151,6 +152,15 @@ export default async function ProspectsPage({
           >
             Apply
           </button>
+
+          {(q || stageFilter || repFilter || followup || sort !== "updated_desc") && (
+            <Link
+              href="/prospects"
+              className="rounded-lg border border-slate-300 px-3.5 py-2 text-sm font-semibold text-slate-600 dark:border-slate-700 dark:text-slate-300"
+            >
+              Clear
+            </Link>
+          )}
         </div>
       </form>
 
