@@ -52,6 +52,14 @@ export default function ProspectForm({
     formAction(fd);
   }
 
+  function clearForm() {
+    formRef.current?.reset();
+    setName("");
+    setAddress("");
+    setLat(null);
+    setLng(null);
+  }
+
   return (
     <>
       <form
@@ -143,6 +151,13 @@ export default function ProspectForm({
         )}
 
         <div className="flex gap-2 pb-6">
+          <button
+            type="button"
+            onClick={clearForm}
+            className="rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-600 dark:border-slate-700 dark:text-slate-300"
+          >
+            Clear
+          </button>
           <button
             type="button"
             onClick={() => router.back()}
