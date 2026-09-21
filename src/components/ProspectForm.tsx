@@ -34,6 +34,8 @@ export default function ProspectForm({
   const [name, setName] = useState("");
   const [similar, setSimilar] = useState<SimilarProspect[] | null>(null);
   const [checking, startChecking] = useTransition();
+  const [liveSimilar, setLiveSimilar] = useState<SimilarProspect[] | null>(null);
+  const [liveChecking, startLiveChecking] = useTransition();
 
   useEffect(() => {
     if (state?.error === "DUPLICATE_CHECK") {
@@ -43,6 +45,24 @@ export default function ProspectForm({
       });
     }
   }, [state, name, address]);
+
+  // Live, non-blocking heads-up as soon as name + address look real —
+  // separate from the submit-time confirmation modal above, which still
+  // gates actual creation.
+  useEffect(() => {
+    const trimmedName = name.trim();
+    const trimmedAddress = address.trim();
+    if (trimmedName.length < 3 || trimmedAddress.length < 5) return;
+    const timer = setTimeout(() => {
+      startLiveChecking(async () => {
+        const results = await findSimilarProspects(trimmedName, trimmedAddress);
+        setLiveSimilar(results.length > 0 ? results : null);
+      });
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [name, address]);
+
+  const showLiveSimilar = liveSimilar && name.trim().length >= 3 && address.trim().length >= 5;
 
   function createAnyway() {
     setSimilar(null);
@@ -97,6 +117,26 @@ export default function ProspectForm({
             }}
           />
         </div>
+
+        {liveChecking && <p className="text-sm text-slate-400 dark:text-slate-500">Checking for existing prospects…</p>}
+
+        {showLiveSimilar && (
+          <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-950">
+            <p className="mb-2 text-sm font-semibold text-amber-800 dark:text-amber-300">
+              {liveSimilar.length} similar prospect{liveSimilar.length === 1 ? "" : "s"} already in the system
+            </p>
+            <div className="space-y-1.5">
+              {liveSimilar.map((s) => (
+                <div key={s.id} className="rounded-lg bg-white px-3 py-2 text-sm dark:bg-slate-900">
+                  <p className="font-medium text-slate-800 dark:text-slate-200">{s.warehouse_name}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {s.address} · {STAGE_META[s.stage].label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-3">
           <div>
