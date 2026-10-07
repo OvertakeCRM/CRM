@@ -68,6 +68,21 @@ export interface Photo {
   created_at: string;
 }
 
+export interface Appointment {
+  id: string;
+  prospect_id: string;
+  rep_id: string;
+  starts_at: string;
+  duration_minutes: number;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface AppointmentWithProspect extends Appointment {
+  prospect: Pick<Prospect, "id" | "warehouse_name" | "address" | "dm_name"> | null;
+  rep: Pick<Profile, "id" | "full_name"> | null;
+}
+
 export interface AppSettings {
   id: number;
   stale_days: number;

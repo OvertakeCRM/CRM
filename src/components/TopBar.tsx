@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sunrise, LayoutDashboard, List, KanbanSquare, Map, Users, LogOut, Plus } from "lucide-react";
+import { Sunrise, CalendarDays, LayoutDashboard, List, KanbanSquare, Map, Users, LogOut, Plus } from "lucide-react";
 import { logout } from "@/lib/actions/auth";
 import ThemeToggle from "@/components/ThemeToggle";
 import type { CurrentUser } from "@/lib/dal";
@@ -10,6 +10,7 @@ export default function TopBar({ user }: { user: CurrentUser }) {
     { href: "/prospects", label: "Prospects", icon: List },
     { href: "/pipeline", label: "Pipeline", icon: KanbanSquare },
     { href: "/map", label: "Map", icon: Map },
+    { href: "/calendar", label: "Calendar", icon: CalendarDays },
     ...(user.role === "admin"
       ? [
           { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },

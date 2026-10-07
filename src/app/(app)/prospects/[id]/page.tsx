@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CalendarPlus } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { requireUser } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
@@ -112,6 +114,18 @@ export default async function ProspectDetailPage({ params }: { params: Promise<{
               <span className="font-semibold text-slate-700 dark:text-slate-200">Current competitor:</span> {p.competitor}
             </p>
           )}
+        </div>
+      )}
+
+      {canEdit && p.stage !== "lost" && (
+        <div className="mb-6">
+          <Link
+            href={`/calendar?book=${p.id}`}
+            className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+          >
+            <CalendarPlus size={16} className="text-blue-600 dark:text-blue-400" />
+            Book an appointment
+          </Link>
         </div>
       )}
 
