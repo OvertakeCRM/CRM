@@ -4,7 +4,8 @@ import { requireUser } from "@/lib/dal";
 import { createClient } from "@/lib/supabase/server";
 import { computeStaleProspects } from "@/lib/dashboard";
 import StageBadge from "@/components/StageBadge";
-import type { ActivityLogEntry, Prospect } from "@/lib/database.types";
+import UpcomingAppointments from "@/components/UpcomingAppointments";
+import type { ActivityLogEntry, AppointmentWithProspect, Prospect } from "@/lib/database.types";
 
 export const metadata = { title: "Today — Overtake CRM" };
 
@@ -29,7 +30,7 @@ export default async function TodayPage() {
   const startOfDay = new Date();
   startOfDay.setHours(0, 0, 0, 0);
 
-  const [{ data: mine }, { data: dueFollowUps }, { data: todayActivity }, { data: settings }] = await Promise.all([
+  const [{ data: mine }, { data: dueFollowUps }, { data: todayActivity }, { data: settings }, { data: upcoming }] = await Promise.all([
     supabase.from("prospects").select("*").eq("assigned_rep_id", user.id),
     supabase
       .from("prospects")
@@ -46,11 +47,19 @@ export default async function TodayPage() {
       .eq("type", "stage_change")
       .gte("created_at", startOfDay.toISOString()),
     supabase.from("app_settings").select("*").single(),
+    supabase
+      .from("appointments")
+      .select("*, prospect:prospects(id, warehouse_name, address, dm_name)")
+      .eq("rep_id", user.id)
+      .gte("starts_at", new Date().toISOString())
+      .order("starts_at", { ascending: true })
+      .limit(8),
   ]);
 
   const myProspects = (mine ?? []) as Prospect[];
   const followUps = (dueFollowUps ?? []) as Prospect[];
   const activity = (todayActivity ?? []) as unknown as ActivityLogEntry[];
+  const appointments = (upcoming ?? []) as unknown as Omit<AppointmentWithProspect, "rep">[];
   const staleDays = settings?.stale_days ?? 14;
   const stale = computeStaleProspects(myProspects, staleDays).slice(0, 8);
 
@@ -95,6 +104,16 @@ export default async function TodayPage() {
             </Link>
           ))}
         </div>
+      </section>
+
+      <section className="mb-8">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Upcoming appointments</h2>
+          <Link href="/calendar" className="text-xs font-medium text-blue-600 dark:text-blue-400">
+            View calendar
+          </Link>
+        </div>
+        <UpcomingAppointments appointments={appointments} />
       </section>
 
       <section className="mb-8">

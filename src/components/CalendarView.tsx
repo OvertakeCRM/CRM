@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import {
   addMonths,
@@ -17,6 +17,7 @@ import {
 } from "date-fns";
 import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
 import { createAppointment, deleteAppointment } from "@/lib/actions/appointments";
+import { useIsClient } from "@/lib/useIsClient";
 import type { AppointmentWithProspect } from "@/lib/database.types";
 
 interface ProspectOption {
@@ -30,17 +31,6 @@ const inputClass =
 const labelClass = "mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300";
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const DURATIONS = [15, 30, 45, 60, 90, 120];
-
-const noopSubscribe = () => () => {};
-// Dates render in the viewer's own time zone, which the server can't know —
-// skip rendering until we're in the browser to avoid a hydration mismatch.
-function useIsClient() {
-  return useSyncExternalStore(
-    noopSubscribe,
-    () => true,
-    () => false,
-  );
-}
 
 function BookingForm({
   prospects,
